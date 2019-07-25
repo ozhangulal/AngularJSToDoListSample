@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Easy To-Do List Sample</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="todoCtrl">
+    <div class="container">
+        <h2>To-Do List Side</h2>
+        <form ng-submit="todoAdd()" class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="todoInput" size="23" placeholder="you can add new to-do !" />
+            </div>
+            <input type="submit" value="Add todo Something" class="btn btn-success"/>
+        </form>
+
+        <hr />
+        <div ng-repeat="x in todoList" class="list-group-item list-group-item-warning">
+            <input type="checkbox" ng-model="x.done"/><span ng-bind="x.todoText"></span>
+        </div>
+
+        <p><button ng-click="remove()" class="btn btn-danger" style="margin-top:10px">Remove Marked</button></p>
+
+        <div class="panel panel-default" style="margin-top:20px">
+            <div class="panel-footer" style="text-align:center"><a href="http://ozhangulal.com/" target="_blank">ozhangulal.com</a></div>
+        </div>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('todoCtrl', function ($scope) {
+
+            $scope.todoList = [
+
+                {
+                    todoText: 'Breakfast with M.J',
+                    done: false
+                },
+                {
+                    todoText: 'Practice with Kyrie Irving',
+                    done: false
+                },
+                {
+                    todoText: 'Dinner with Derrick Rose',
+                    done: false
+                }
+
+            ];
+
+            $scope.todoAdd = function () {
+
+                $scope.todoList.push({ todoText: $scope.todoInput, done: false });
+                $scope.todoInput = "";
+
+            };
+
+            $scope.remove = function () {
+
+                var oldList = $scope.todoList;
+                $scope.todoList = [];
+                angular.forEach(oldList, function (x) {
+                    if (!x.done) $scope.todoList.push(x);
+                });
+            };
+
+        });
+    </script>
+</body>
+</html>
